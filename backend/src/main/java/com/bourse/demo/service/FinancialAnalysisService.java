@@ -3,7 +3,7 @@ package com.bourse.demo.service;
 import com.bourse.demo.dto.*;
 import com.bourse.demo.entity.FinancialAnalysis;
 import com.bourse.demo.repository.FinancialAnalysisRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
