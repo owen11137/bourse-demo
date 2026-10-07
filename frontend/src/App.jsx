@@ -1,12 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import axios from 'axios';
 import {Alert,AppBar,Box,Button,Card,CardContent,Chip,CircularProgress,Container,Divider,Grid,IconButton,LinearProgress,Paper,Stack,Toolbar,Typography} from '@mui/material';
-import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
-import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import HistoryIcon from '@mui/icons-material/History';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 
 const api=axios.create({baseURL:import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1',timeout:120000});
 const number=(value,suffix='')=>value==null?'—':new Intl.NumberFormat('fa-IR',{maximumFractionDigits:2}).format(value)+suffix;
@@ -78,7 +72,7 @@ export default function App(){
   const r=selected?.result;
   return <Box sx={{minHeight:'100vh',bgcolor:'#f4f7fb',pb:8}}>
     <AppBar position="static" elevation={0} sx={{bgcolor:'#102c4d'}}>
-      <Toolbar sx={{gap:1.5}}><AnalyticsOutlinedIcon/><Typography fontWeight={800} variant="h6">بورس دمو</Typography>
+      <Toolbar sx={{gap:1.5}}>📊<Typography fontWeight={800} variant="h6">بورس دمو</Typography>
         <Box sx={{flexGrow:1}}/><Chip label="تحلیل هوشمند گزارش‌های مالی" sx={{color:'#eaf4ff',bgcolor:'#254d77'}}/></Toolbar>
     </AppBar>
     <Container maxWidth="lg" sx={{pt:{xs:3,md:5}}}>
@@ -94,9 +88,9 @@ export default function App(){
                 sx={{cursor:'pointer',border:'2px dashed #9db7d3',borderRadius:3,p:3,textAlign:'center',bgcolor:'#f8fbff',transition:'.2s','&:hover':{borderColor:'#1976d2'}}}>
                 <input ref={inputRef} type="file" hidden accept="image/png,image/jpeg,image/webp,image/gif" onChange={e=>{chooseFile(e.target.files?.[0]);e.target.value='';}}/>
                 {preview?<Box component="img" src={preview} alt="پیش‌نمایش تصویر انتخابی" sx={{maxWidth:'100%',maxHeight:300,objectFit:'contain',borderRadius:2}}/>:
-                  <><CloudUploadOutlinedIcon sx={{fontSize:48,color:'#547ea9'}}/><Typography fontWeight={700}>برای انتخاب تصویر کلیک کنید یا فایل را اینجا رها کنید</Typography><Typography variant="body2" color="text.secondary" sx={{mt:1}}>PNG، JPG، WebP یا GIF — حداکثر ۱۵ مگابایت</Typography></>}
+                  <><Typography sx={{fontSize:48}}>☁️</Typography><Typography fontWeight={700}>برای انتخاب تصویر کلیک کنید یا فایل را اینجا رها کنید</Typography><Typography variant="body2" color="text.secondary" sx={{mt:1}}>PNG، JPG، WebP یا GIF — حداکثر ۱۵ مگابایت</Typography></>}
               </Box>
-              {file&&<Typography variant="body2" sx={{mt:2}}><ImageOutlinedIcon fontSize="small" sx={{verticalAlign:'middle',ml:1}}/>{file.name}</Typography>}
+              {file&&<Typography variant="body2" sx={{mt:2}}>🖼️ {file.name}</Typography>}
               <Button fullWidth size="large" variant="contained" disabled={!file||loading} onClick={analyze} sx={{mt:3,py:1.4,borderRadius:2,fontWeight:800}}>
                 {loading?<><CircularProgress size={20} color="inherit" sx={{ml:1}}/>در حال تحلیل تصویر...</>:'شروع تحلیل و ذخیره در پایگاه داده'}
               </Button>
@@ -107,7 +101,7 @@ export default function App(){
         <Grid size={{xs:12,md:5}}>
           <Card sx={{borderRadius:4,height:'100%',boxShadow:'0 10px 35px #102c4d0c'}}>
             <CardContent sx={{p:3}}>
-              <Stack direction="row" alignItems="center" spacing={1}><HistoryIcon color="primary"/><Typography variant="h6" fontWeight={800}>تاریخچه تحلیل‌ها</Typography><Box sx={{flex:1}}/><IconButton aria-label="بروزرسانی تاریخچه" onClick={loadHistory} disabled={historyLoading}><RefreshIcon/></IconButton></Stack>
+              <Stack direction="row" alignItems="center" spacing={1}>🕘<Typography variant="h6" fontWeight={800}>تاریخچه تحلیل‌ها</Typography><Box sx={{flex:1}}/><IconButton aria-label="بروزرسانی تاریخچه" onClick={loadHistory} disabled={historyLoading}>↻</IconButton></Stack>
               <Divider sx={{my:2}}/>
               {historyLoading&&<LinearProgress/>}
               {!history.length?<Typography color="text.secondary" sx={{py:4,textAlign:'center'}}>هنوز تحلیلی ذخیره نشده است.</Typography>:
@@ -118,7 +112,7 @@ export default function App(){
                         <Typography fontWeight={700}>{item.result?.company?.name||'شرکت نامشخص'}</Typography>
                         <Typography variant="caption" color="text.secondary">{item.createdAt?new Date(item.createdAt).toLocaleString('fa-IR'):'—'} | شناسه {number(item.id)}</Typography>
                       </Box>
-                      <IconButton size="small" color="error" aria-label="حذف تحلیل" onClick={()=>remove(item.id)}><DeleteOutlineIcon fontSize="small"/></IconButton>
+                      <IconButton size="small" color="error" aria-label="حذف تحلیل" onClick={()=>remove(item.id)}>×</IconButton>
                     </Stack>
                   </Paper>)}
                 </Stack>}
