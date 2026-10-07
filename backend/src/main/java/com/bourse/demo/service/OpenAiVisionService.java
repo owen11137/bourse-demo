@@ -1,7 +1,8 @@
 package com.bourse.demo.service;
 
 import com.bourse.demo.dto.AnalysisResult;
-import com.fasterxml.jackson.databind.*;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,7 @@ public class OpenAiVisionService {
     }
 
     private String extractOutputText(JsonNode root) {
+        if (root == null) throw new IllegalStateException("OpenAI returned an empty response");
         for (JsonNode output : root.path("output")) {
             for (JsonNode content : output.path("content")) {
                 if ("output_text".equals(content.path("type").asText()) && content.has("text"))
